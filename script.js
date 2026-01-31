@@ -113,7 +113,12 @@ if (contactForm) {
                 const webhookUrl = 'https://n8n.example.com/webhook/your-id';
 
                 if (webhookUrl.includes('example.com')) {
-                    throw new Error('WEBHOOK_NOT_CONFIGURED');
+                    // ТЕСТОВЫЙ РЕЖИМ: Если URL не настроен, просто имитируем успех для проверки дизайна
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    showNotification('Тестовая отправка успешна! (Webhook не настроен в script.js)', 'info');
+                    console.log('Данные вашей формы:', data);
+                    contactForm.reset();
+                    return;
                 }
 
                 const response = await fetch(webhookUrl, {
